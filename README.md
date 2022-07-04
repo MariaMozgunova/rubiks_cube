@@ -25,6 +25,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#whats-next">What's next?</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -106,6 +107,15 @@ To use this Rubik's Cube solver, follow the simple steps below.
 ## Usage
 
 See `main.cpp` for an example of usage.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- FURTHER DEVELOPMENT -->
+## What's next?
+
+The next step in this project is to add visualization to the process of solving the cube.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
