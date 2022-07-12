@@ -1,4 +1,5 @@
-#include "rubiks_cube.hpp"
+#include "cube.h"
+#include "graphics.h"
 
 int main()
 {
