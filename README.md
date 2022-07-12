@@ -25,6 +25,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#how-i-was-struggling-to-implement-visualization">How I was struggling to implement visualization</a></li>
     <li><a href="#whats-next">What's next?</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -46,7 +47,7 @@ The following actions are possible:
 - Output to any `std::ostream` the state of the Rubik's Cube
 - Spin the facelets of the Rubik's Cube
 - Generate the solvable state of the Rubik's Cube
-- Solve the Rubik's Cube
+- Solve the Rubik's Cube [now with the visualization]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -112,10 +113,39 @@ See `main.cpp` for an example of usage.
 
 
 
+<!-- VISUALIZATION JOURNEY -->
+## How I was struggling to implement visualization
+
+First of all, I decided to use `GLUT` to visualize my Solver. However, when lot's of my attempts to install it failed, I decided that something was going wrong. It is then when I discovered you can use [`vcpkg`](https://www.youtube.com/watch?v=pSirBt4OgXQ) to easily install any package. 
+
+Next, I realised that the modern way to work with graphics is through `glad` and `glfw3`. Thus, I simply installed `glad` and `glfw3` with `vcpkg`... and here began my journey of exploring OpenGL. Btw, I can recommend [Learn OpenGL tutorial](https://learnopengl.com/Introduction) for those who is learning how to work with `glad` and `glfw3`.
+
+First things first, I tried to draw a square composed of two triangle and spin one of them.
+
+![spin single triangle](https://github.com/MariaMozgunova/pictures/blob/master/gif%20rotating%20one%20triangle.mp4)
+
+After that, I was curious whether I am able to rotate multiple triangles simultaniously. I built four squares out of eight triangles.
+
+![rotate multiple figures at once](https://github.com/MariaMozgunova/pictures/blob/master/%D0%BA%D1%83%D0%B1%D0%B8%D0%BA%202%20by%202%20by%201.png)
+
+Subsequently, I started building each facelet cubie by cubie.
+
+![first two squares](https://github.com/MariaMozgunova/pictures/blob/master/building%20each%20facelet%20cubie%20by%20cubie.png)
+
+![two opposite sides](https://github.com/MariaMozgunova/pictures/blob/master/get%20B%20facelet%20nearly%20for%20free%20(notice%20that%20z%20coordinates%20can%20only%20be%20negated).png)
+
+![only up and down left](https://github.com/MariaMozgunova/pictures/blob/master/got%20a%20bracelet.png)
+
+![got a skeletonfor the cube](https://github.com/MariaMozgunova/pictures/blob/master/hey%2C%20skeleton%20is%20finally%20built.png)
+
+
+
+
+
 <!-- FURTHER DEVELOPMENT -->
 ## What's next?
 
-The next step in this project is to add visualization to the process of solving the cube.
+I should consider filling in the cube as now you can see all the insides while it it rotating.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
