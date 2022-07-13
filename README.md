@@ -82,7 +82,7 @@ To arbitrarily rotate the cube's facelets use `RubiksCube::rotate(uint8_t cmd)`.
 `10`=rotate the back facelet clockwise, 
 `11`=rotate the back facelet counterclockwise.
 
-You can shuffle the cube with the `RubiksCube::shuffle()` function. Basically, what it does is generate some number of rotations.
+You can shuffle the cube with the `RubiksCube::shuffle()` function. What it does is generate some number of rotations.
 
 You can get the sequence of rotations to solve the cube with the `RubiksCube::solve()` function. 
 
@@ -116,15 +116,15 @@ See `main.cpp` for an example of usage.
 <!-- VISUALIZATION JOURNEY -->
 ## How I was struggling to implement visualization
 
-First of all, I decided to use `GLUT` to visualize my Solver. However, when lot's of my attempts to install it failed, I decided that something was going wrong. It is then when I discovered you can use [`vcpkg`](https://www.youtube.com/watch?v=pSirBt4OgXQ) to easily install any package. 
+First of all, I decided to use `GLUT` to visualize my Solver. However, when a lot of my attempts to install it failed, I decided that something was going wrong. It is then that I discovered you could use [`vcpkg`](https://www.youtube.com/watch?v=pSirBt4OgXQ) to easily install any package with VisualStudio. 
 
-Next, I realised that the modern way to work with graphics is through `glad` and `glfw3`. Thus, I simply installed `glad` and `glfw3` with `vcpkg`... and here began my journey of exploring OpenGL. Btw, I can recommend [Learn OpenGL tutorial](https://learnopengl.com/Introduction) for those who is learning how to work with `glad` and `glfw3`.
+Next, I realized that the modern way to work with graphics is through `glad` and `glfw3`. Thus, I installed `glad` and `glfw3` with `vcpkg`... and here began my journey of exploring OpenGL. Btw, I can recommend [Learn OpenGL tutorial](https://learnopengl.com/Introduction) for those who are learning how to work with `glad` and `glfw3`.
 
-First things first, I tried to draw a square composed of two triangle and spin one of them.
+First things first, I tried to draw a square composed of two triangles and spin one of them.
 
-![spin single triangle](https://github.com/MariaMozgunova/pictures/blob/master/gif%20rotating%20one%20triangle.mp4)
+![spin single triangle]()
 
-After that, I was curious whether I am able to rotate multiple triangles simultaniously. I built four squares out of eight triangles.
+After that, I was curious whether I could rotate multiple triangles simultaneously. I built four squares out of eight triangles.
 
 ![rotate multiple figures at once](https://github.com/MariaMozgunova/pictures/blob/master/%D0%BA%D1%83%D0%B1%D0%B8%D0%BA%202%20by%202%20by%201.png)
 
@@ -136,16 +136,32 @@ Subsequently, I started building each facelet cubie by cubie.
 
 ![only up and down left](https://github.com/MariaMozgunova/pictures/blob/master/got%20a%20bracelet.png)
 
-![got a skeletonfor the cube](https://github.com/MariaMozgunova/pictures/blob/master/hey%2C%20skeleton%20is%20finally%20built.png)
+![got a skeleton for the cube](https://github.com/MariaMozgunova/pictures/blob/master/hey%2C%20skeleton%20is%20finally%20built.png)
 
+The next step was to color the cube.
 
+![color the cube](https://github.com/MariaMozgunova/pictures/blob/master/look!%20it%20actually%20works.png)
+
+Rotating the whole cube worked alright.
+
+![rotate the whole cube]()
+
+However, trying to rotate the particular facelet was a disaster.
+
+![cubie is missing](https://github.com/MariaMozgunova/pictures/blob/master/hey%2C%20why%20some%20of%20the%20squares%20are%20missing.png)
+
+After dealing with the above issue, I managed to make visualization into my code. Watch the video solving the cube below!
+
+![visualization of the entire solution]()
+
+I also managed to decrease by two the number of moves required to solve the Rubik's Cube compared to my initial implementation.
 
 
 
 <!-- FURTHER DEVELOPMENT -->
 ## What's next?
 
-I should consider filling in the cube as now you can see all the insides while it it rotating.
+I should consider filling in the cube as now you can see all the insides while it is rotating.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
