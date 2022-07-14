@@ -60,15 +60,15 @@ Several [efficient algorithms](https://en.wikipedia.org/wiki/Optimal_solutions_f
 First things first, the facelet and the cubie are shown in the picture below.
 ![facelet and cubie](https://github.com/MariaMozgunova/pictures/blob/master/facelet_and_cubie.png?raw=true)
 
-To input the state of the Rubik's Cube into the program, you give it a 6-element array of 9 uints. Specify the colors as follow: `BLUE`=0, `ORANGE`=1, `GREEN`=2, `RED`=3, `WHITE`=4, `YELLOW`=5.
+To input the state of the Rubik's Cube into the program, you give it a 6-element array of 9 `uint`s. Specify the colors as follow: `BLUE`=0, `ORANGE`=1, `GREEN`=2, `RED`=3, `WHITE`=4, `YELLOW`=5.
 
 The program outputs the state of the Rubik's Cube as the 6 strings of 9 elements. To decode the string use the mapping: `B`=`BLUE`; `O`=`ORANGE`; `G`=`GREEN`; `R`=`RED`; `W`=`WHITE`;`Y`=`YELLOW`;
 
-To check the correctness of the Rubik's Cube's state program validates four conditions Edge Permutation Parity, Edge Orientation Parity, Corner Permutation Parity, Corner Orientation Parity as specified in [this paper](http://www.math.rwth-aachen.de/~Martin.Schoenert/Cube-Lovers/David_Vanderschel__Orbit_Classification.html). You can check if the cube is solvable using `RubiksCube::validate_cube()` method.
+To check the correctness of the Rubik's Cube's state program validates four conditions: Edge Permutation Parity, Edge Orientation Parity, Corner Permutation Parity, Corner Orientation Parity as specified in [this paper](http://www.math.rwth-aachen.de/~Martin.Schoenert/Cube-Lovers/David_Vanderschel__Orbit_Classification.html). You can check if the cube is solvable using `void RubiksCube::validate_cube()` method.
 
-To output the cube's current state use `RubiksCube::print_cube(std::ostream &out = std::cout)` function.
+To output the cube's current state use `void RubiksCube::print_cube(std::ostream &out = std::cout)` function.
 
-To arbitrarily rotate the cube's facelets use `RubiksCube::rotate(uint8_t cmd)`. The argument `cmd` can take 12 values: 
+To arbitrarily rotate the cube's facelets use `void RubiksCube::rotate(uint8_t cmd)`. The argument `cmd` can take 18 values: 
 `0`=rotate the upper facelet clockwise, 
 `1`=rotate the upper facelet counterclockwise, 
 `2`=rotate the down facelet clockwise, 
@@ -80,11 +80,19 @@ To arbitrarily rotate the cube's facelets use `RubiksCube::rotate(uint8_t cmd)`.
 `8`=rotate the front facelet clockwise, 
 `9`=rotate the front facelet counterclockwise, 
 `10`=rotate the back facelet clockwise, 
-`11`=rotate the back facelet counterclockwise.
+`11`=rotate the back facelet counterclockwise, 
+`12`=`x` (reference the picture below),
+`13`=`x'`,
+`14`=`y`,
+`15`=`y'`,
+`16`=`z`,
+`17`=`z'`.
 
-You can shuffle the cube with the `RubiksCube::shuffle()` function. What it does is generate some number of rotations.
+![explain x, y, z rotations and their primes](https://github.com/MariaMozgunova/pictures/blob/master/entire%20cube%20rotations.png)
 
-You can get the sequence of rotations to solve the cube with the `RubiksCube::solve()` function. 
+You can shuffle the cube with the `void RubiksCube::shuffle()` function. What it does is generate some number of rotations.
+
+You can get the sequence of rotations to solve the cube with the `void RubiksCube::solve()` function. 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -98,7 +106,8 @@ To use this Rubik's Cube solver, follow the simple steps below.
 ### Installation
 
 1. Clone the repo `git clone https://github.com/MariaMozgunova/rubiks_cube.git`
-2. Include the Rubik's Cube solver into your code `#include "rubiks_cube/rubiks_cube.hpp"`
+2. Include the Rubik's Cube solver into your code `#include "rubiks_cube/cube.h"`
+3. Include the visualization into your code `#include "rubiks_cube/graphics.h"`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
