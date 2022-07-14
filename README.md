@@ -122,7 +122,7 @@ Next, I realized that the modern way to work with graphics is through `glad` and
 
 First things first, I tried to draw a square composed of two triangles and spin one of them.
 
-![spin single triangle]()
+![spin single triangle](https://github.com/MariaMozgunova/pictures/blob/master/spin%20the%20single%20triangle.gif)
 
 After that, I was curious whether I could rotate multiple triangles simultaneously. I built four squares out of eight triangles.
 
@@ -144,7 +144,7 @@ The next step was to color the cube.
 
 Rotating the whole cube worked alright.
 
-![rotate the whole cube]()
+![rotate the whole cube](https://github.com/MariaMozgunova/pictures/blob/master/rotate%20the%20entire%20cube.gif)
 
 However, trying to rotate the particular facelet was a disaster.
 
@@ -152,7 +152,7 @@ However, trying to rotate the particular facelet was a disaster.
 
 After dealing with the above issue, I managed to make visualization into my code. Watch the video solving the cube below!
 
-![visualization of the entire solution]()
+![visualization of the entire solution](https://github.com/MariaMozgunova/pictures/blob/master/whole_solution.gif)
 
 I also managed to decrease by two the number of moves required to solve the Rubik's Cube compared to my initial implementation.
 
