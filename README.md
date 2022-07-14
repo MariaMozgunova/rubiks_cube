@@ -25,6 +25,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#how-i-was-struggling-to-implement-visualization">How I was struggling to implement visualization</a></li>
     <li><a href="#whats-next">What's next?</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -46,7 +47,7 @@ The following actions are possible:
 - Output to any `std::ostream` the state of the Rubik's Cube
 - Spin the facelets of the Rubik's Cube
 - Generate the solvable state of the Rubik's Cube
-- Solve the Rubik's Cube
+- Solve the Rubik's Cube [now with the visualization]
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -59,15 +60,15 @@ Several [efficient algorithms](https://en.wikipedia.org/wiki/Optimal_solutions_f
 First things first, the facelet and the cubie are shown in the picture below.
 ![facelet and cubie](https://github.com/MariaMozgunova/pictures/blob/master/facelet_and_cubie.png?raw=true)
 
-To input the state of the Rubik's Cube into the program, you give it a 6-element array of 9 uints. Specify the colors as follow: `BLUE`=0, `ORANGE`=1, `GREEN`=2, `RED`=3, `WHITE`=4, `YELLOW`=5.
+To input the state of the Rubik's Cube into the program, you give it a 6-element array of 9 `uint`s. Specify the colors as follow: `BLUE`=0, `ORANGE`=1, `GREEN`=2, `RED`=3, `WHITE`=4, `YELLOW`=5.
 
 The program outputs the state of the Rubik's Cube as the 6 strings of 9 elements. To decode the string use the mapping: `B`=`BLUE`; `O`=`ORANGE`; `G`=`GREEN`; `R`=`RED`; `W`=`WHITE`;`Y`=`YELLOW`;
 
-To check the correctness of the Rubik's Cube's state program validates four conditions Edge Permutation Parity, Edge Orientation Parity, Corner Permutation Parity, Corner Orientation Parity as specified in [this paper](http://www.math.rwth-aachen.de/~Martin.Schoenert/Cube-Lovers/David_Vanderschel__Orbit_Classification.html). You can check if the cube is solvable using `RubiksCube::validate_cube()` method.
+To check the correctness of the Rubik's Cube's state program validates four conditions: Edge Permutation Parity, Edge Orientation Parity, Corner Permutation Parity, Corner Orientation Parity as specified in [this paper](http://www.math.rwth-aachen.de/~Martin.Schoenert/Cube-Lovers/David_Vanderschel__Orbit_Classification.html). You can check if the cube is solvable using `void RubiksCube::validate_cube()` method.
 
-To output the cube's current state use `RubiksCube::print_cube(std::ostream &out = std::cout)` function.
+To output the cube's current state use `void RubiksCube::print_cube(std::ostream &out = std::cout)` function.
 
-To arbitrarily rotate the cube's facelets use `RubiksCube::rotate(uint8_t cmd)`. The argument `cmd` can take 12 values: 
+To arbitrarily rotate the cube's facelets use `void RubiksCube::rotate(uint8_t cmd)`. The argument `cmd` can take 18 values: 
 `0`=rotate the upper facelet clockwise, 
 `1`=rotate the upper facelet counterclockwise, 
 `2`=rotate the down facelet clockwise, 
@@ -79,11 +80,19 @@ To arbitrarily rotate the cube's facelets use `RubiksCube::rotate(uint8_t cmd)`.
 `8`=rotate the front facelet clockwise, 
 `9`=rotate the front facelet counterclockwise, 
 `10`=rotate the back facelet clockwise, 
-`11`=rotate the back facelet counterclockwise.
+`11`=rotate the back facelet counterclockwise, 
+`12`=`x` (reference the picture below),
+`13`=`x'`,
+`14`=`y`,
+`15`=`y'`,
+`16`=`z`,
+`17`=`z'`.
 
-You can shuffle the cube with the `RubiksCube::shuffle()` function. Basically, what it does is generate some number of rotations.
+![explain x, y, z rotations and their primes](https://github.com/MariaMozgunova/pictures/blob/master/entire%20cube%20rotations.png)
 
-You can get the sequence of rotations to solve the cube with the `RubiksCube::solve()` function. 
+You can shuffle the cube with the `void RubiksCube::shuffle()` function. What it does is generate some number of rotations.
+
+You can get the sequence of rotations to solve the cube with the `void RubiksCube::solve()` function. 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -97,7 +106,8 @@ To use this Rubik's Cube solver, follow the simple steps below.
 ### Installation
 
 1. Clone the repo `git clone https://github.com/MariaMozgunova/rubiks_cube.git`
-2. Include the Rubik's Cube solver into your code `#include "rubiks_cube/rubiks_cube.hpp"`
+2. Include the Rubik's Cube solver into your code `#include "rubiks_cube/cube.h"`
+3. Include the visualization into your code `#include "rubiks_cube/graphics.h"`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -112,10 +122,55 @@ See `main.cpp` for an example of usage.
 
 
 
+<!-- VISUALIZATION JOURNEY -->
+## How I was struggling to implement visualization
+
+First of all, I decided to use `GLUT` to visualize my Solver. However, when a lot of my attempts to install it failed, I decided that something was going wrong. It is then that I discovered you could use [`vcpkg`](https://www.youtube.com/watch?v=pSirBt4OgXQ) to easily install any package with VisualStudio. 
+
+Next, I realized that the modern way to work with graphics is through `glad` and `glfw3`. Thus, I installed `glad` and `glfw3` with `vcpkg`... and here began my journey of exploring OpenGL. Btw, I can recommend [Learn OpenGL tutorial](https://learnopengl.com/Introduction) for those who are learning how to work with `glad` and `glfw3`.
+
+First things first, I tried to draw a square composed of two triangles and spin one of them.
+
+![spin single triangle](https://github.com/MariaMozgunova/pictures/blob/master/spin%20the%20single%20triangle.gif)
+
+After that, I was curious whether I could rotate multiple triangles simultaneously. I built four squares out of eight triangles.
+
+![rotate multiple figures at once](https://github.com/MariaMozgunova/pictures/blob/master/%D0%BA%D1%83%D0%B1%D0%B8%D0%BA%202%20by%202%20by%201.png)
+
+Subsequently, I started building each facelet cubie by cubie.
+
+![first two squares](https://github.com/MariaMozgunova/pictures/blob/master/building%20each%20facelet%20cubie%20by%20cubie.png)
+
+![two opposite sides](https://github.com/MariaMozgunova/pictures/blob/master/get%20B%20facelet%20nearly%20for%20free%20(notice%20that%20z%20coordinates%20can%20only%20be%20negated).png)
+
+![only up and down left](https://github.com/MariaMozgunova/pictures/blob/master/got%20a%20bracelet.png)
+
+![got a skeleton for the cube](https://github.com/MariaMozgunova/pictures/blob/master/hey%2C%20skeleton%20is%20finally%20built.png)
+
+The next step was to color the cube.
+
+![color the cube](https://github.com/MariaMozgunova/pictures/blob/master/look!%20it%20actually%20works.png)
+
+Rotating the whole cube worked alright.
+
+![rotate the whole cube](https://github.com/MariaMozgunova/pictures/blob/master/rotate%20the%20entire%20cube.gif)
+
+However, trying to rotate the particular facelet was a disaster.
+
+![cubie is missing](https://github.com/MariaMozgunova/pictures/blob/master/hey%2C%20why%20some%20of%20the%20squares%20are%20missing.png)
+
+After dealing with the above issue, I managed to make visualization into my code. Watch the video solving the cube below!
+
+![visualization of the entire solution](https://github.com/MariaMozgunova/pictures/blob/master/whole_solution.gif)
+
+I also managed to decrease by two the number of moves required to solve the Rubik's Cube compared to my initial implementation.
+
+
+
 <!-- FURTHER DEVELOPMENT -->
 ## What's next?
 
-The next step in this project is to add visualization to the process of solving the cube.
+I should consider filling in the cube as now you can see all the insides while it is rotating.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
