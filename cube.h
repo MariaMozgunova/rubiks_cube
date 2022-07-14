@@ -9,13 +9,16 @@
 #include <cctype>
 #include <random>
 #include <stdexcept>
+#include <algorithm>
 
 using u32 = uint_least32_t;
 using engine = std::mt19937;
 
+
 class RubiksCube {
 private:
     uint8_t cube[6][9];
+    std::vector<uint8_t> solution;
 public:
     RubiksCube(uint8_t in[6][9]);
     RubiksCube(std::ifstream& in);
@@ -32,12 +35,12 @@ public:
     void rotate_facelet(int i);
     void print_facelet(int j, std::ostream& out = std::cout);
     void print_cube(std::ostream& out = std::cout);
-    void F(bool visualization_required = 1);
-    void R(bool visualization_required = 1);
-    void B(bool visualization_required = 1);
-    void L(bool visualization_required = 1);
-    void U(bool visualization_required = 1);
-    void D(bool visualization_required = 1);
+    void F();
+    void R();
+    void B();
+    void L();
+    void U();
+    void D();
     void Fprime();
     void Rprime();
     void Bprime();
@@ -45,9 +48,9 @@ public:
     void Uprime();
     void Dprime();
     void assign_facelet(uint8_t* facelet, uint8_t* other);
-    void x(bool visualization_required = 1);
-    void y(bool visualization_required = 1);
-    void z(bool visualization_required = 1);
+    void x();
+    void y();
+    void z();
     void xprime();
     void yprime();
     void zprime();
@@ -71,6 +74,8 @@ public:
     void alg9();
     void alg10();
     void step7();
+    void optimize_solution();
+    void visualize_solution(RubiksCube& cube);
     void solve();
     void rotate(uint8_t cmd);
     void shuffle();
