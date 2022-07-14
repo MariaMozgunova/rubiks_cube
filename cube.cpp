@@ -10,7 +10,7 @@
 // Edge parity: The sum of all orientations of edges must be even
 // Thus, we only need to check corner and edge parity
 
-// http://math.fon.rs/files/DanielsProject58.pdf <- Group Theory and the Rubik’s Cube
+// http://math.fon.rs/files/DanielsProject58.pdf <- Group Theory and the Rubikâ€™s Cube
 // https://cstheory.stackexchange.com/questions/47982/generating-a-pseudo-random-rubiks-cube-in-on2-epsilon-time
 // https://medium.com/@benjamin.botto/implementing-an-optimal-rubiks-cube-solver-using-korf-s-algorithm-bf750b332cf9
 // https://www.youtube.com/watch?v=ua7L34HAmuo
@@ -22,7 +22,7 @@ std::random_device os_seed;
 const u32 seed = os_seed();
 
 engine generator(seed);
-std::uniform_int_distribution<u32> command(0, 11);
+std::uniform_int_distribution<u32> command(0, 17);
 std::uniform_int_distribution<u32> times(5, 100);
 
 RubiksCube::RubiksCube(uint8_t in[6][9]) {
@@ -338,10 +338,9 @@ void RubiksCube::print_cube(std::ostream& out) {
     out << '\n';
 }
 
-void RubiksCube::F(bool visualization_required) {
-    if (visualization_required)
-        vis::visualize_rotation(8, *this);
-    
+void RubiksCube::F() {
+    solution.push_back(8);
+
     std::cout << "F";
     rotate_facelet(0);
     uint8_t tmp1 = cube[1][6];
@@ -365,9 +364,8 @@ void RubiksCube::F(bool visualization_required) {
     cube[5][2] = tmp3;
 }
 
-void RubiksCube::R(bool visualization_required) {
-    if (visualization_required)
-        vis::visualize_rotation(4, *this);
+void RubiksCube::R() {
+    solution.push_back(4);
 
     std::cout << "R";
     rotate_facelet(1);
@@ -392,9 +390,8 @@ void RubiksCube::R(bool visualization_required) {
     cube[5][4] = tmp3;
 }
 
-void RubiksCube::B(bool visualization_required) {
-    if (visualization_required)
-        vis::visualize_rotation(10, *this);
+void RubiksCube::B() {
+    solution.push_back(10);
 
     std::cout << "B";
     rotate_facelet(2);
@@ -419,9 +416,8 @@ void RubiksCube::B(bool visualization_required) {
     cube[5][6] = tmp3;
 }
 
-void RubiksCube::L(bool visualization_required) {
-    if (visualization_required)
-        vis::visualize_rotation(6, *this);
+void RubiksCube::L() {
+    solution.push_back(6);
 
     std::cout << "L";
     rotate_facelet(3);
@@ -446,9 +442,8 @@ void RubiksCube::L(bool visualization_required) {
     cube[5][0] = tmp3;
 }
 
-void RubiksCube::U(bool visualization_required) {
-    if (visualization_required)
-        vis::visualize_rotation(0, *this);
+void RubiksCube::U() {
+    solution.push_back(0);
 
     std::cout << "U";
     rotate_facelet(4);
@@ -473,9 +468,8 @@ void RubiksCube::U(bool visualization_required) {
     cube[0][2] = tmp3;
 }
 
-void RubiksCube::D(bool visualization_required) {
-    if (visualization_required)
-        vis::visualize_rotation(2, *this);
+void RubiksCube::D() {
+    solution.push_back(2);
 
     std::cout << "D";
     rotate_facelet(5);
@@ -501,50 +495,38 @@ void RubiksCube::D(bool visualization_required) {
 }
 
 void RubiksCube::Fprime() {
-    vis::visualize_rotation(9, *this);
-
     for (int i = 0; i < 3; ++i) {
-        F(0);
+        F();
     }
 }
 
 void RubiksCube::Rprime() {
-    vis::visualize_rotation(5, *this);
-
     for (int i = 0; i < 3; ++i) {
-        R(0);
+        R();
     }
 }
 
 void RubiksCube::Bprime() {
-    vis::visualize_rotation(11, *this);
-
     for (int i = 0; i < 3; ++i) {
-        B(0);
+        B();
     }
 }
 
 void RubiksCube::Lprime() {
-    vis::visualize_rotation(7, *this);
-
     for (int i = 0; i < 3; ++i) {
-        L(0);
+        L();
     }
 }
 
 void RubiksCube::Uprime() {
-    vis::visualize_rotation(1, *this);
-
     for (int i = 0; i < 3; ++i) {
-        U(0);
+        U();
     }
 }
 
 void RubiksCube::Dprime() {
-    vis::visualize_rotation(3, *this);
-
     for (int i = 0; i < 3; ++i) {
-        D(0);
+        D();
     }
 }
 
@@ -554,9 +536,8 @@ void RubiksCube::assign_facelet(uint8_t* facelet, uint8_t* other) {
     }
 }
 
-void RubiksCube::x(bool visualization_required) {
-    if (visualization_required)
-        vis::visualize_rotation(12, *this);
+void RubiksCube::x() {
+    solution.push_back(12);
 
     std::cout << "x";
 
@@ -578,9 +559,8 @@ void RubiksCube::x(bool visualization_required) {
     rotate_facelet(3);
 }
 
-void RubiksCube::y(bool visualization_required) {
-    if (visualization_required)
-        vis::visualize_rotation(14, *this);
+void RubiksCube::y() {
+    solution.push_back(14);
 
     std::cout << "y";
 
@@ -598,9 +578,8 @@ void RubiksCube::y(bool visualization_required) {
     rotate_facelet(5);
 }
 
-void RubiksCube::z(bool visualization_required) {
-    if (visualization_required)
-        vis::visualize_rotation(16, *this);
+void RubiksCube::z() {
+    solution.push_back(16);
 
     std::cout << "z";
 
@@ -623,26 +602,20 @@ void RubiksCube::z(bool visualization_required) {
 }
 
 void RubiksCube::xprime() {
-    vis::visualize_rotation(13, *this);
-
     for (int i = 0; i < 3; ++i) {
-        x(0);
+        x();
     }
 }
 
 void RubiksCube::yprime() {
-    vis::visualize_rotation(15, *this);
-
     for (int i = 0; i < 3; ++i) {
-        y(0);
+        y();
     }
 }
 
 void RubiksCube::zprime() {
-    vis::visualize_rotation(17, *this);
-
     for (int i = 0; i < 3; ++i) {
-        z(0);
+        z();
     }
 }
 
@@ -1192,12 +1165,49 @@ void RubiksCube::step7() {
     }
 }
 
+void RubiksCube::optimize_solution() {
+    std::vector<uint8_t> temp;
+
+    while (!solution.empty()) {
+        uint8_t move = solution.back();
+        solution.pop_back();
+        uint8_t prime = (move / 2) * 2  + (1 ^ (move % 2));
+
+        if (!solution.empty() && solution.back() == prime) {
+            solution.pop_back();
+        }
+        else if ((solution.size() > 1) &&
+            solution.back() == solution[solution.size() - 2] &&
+            solution.back() == move) {
+            solution.pop_back();
+            solution.pop_back();
+            solution.push_back(prime);
+        }
+        else {
+            temp.push_back(move);
+        }
+    }
+
+    std::reverse(temp.begin(), temp.end());
+    solution = temp;
+}
+
+void RubiksCube::visualize_solution(RubiksCube& cube) {
+    for (uint8_t move : solution) {
+        vis::visualize_rotation(move, cube);
+    
+        cube.rotate(move);
+    }
+}
+
 void RubiksCube::solve() {
-    vis::init();
     std::cout << "prepare your cube:\n";
     validate_cube();
     std::cout << "\nthe Rubik's Cube you get:\n";
     print_cube();
+
+    solution.clear();
+    RubiksCube copy = *this;
 
     std::cout << "\nsolve the white cross on U:\n";
     step1();
@@ -1233,6 +1243,12 @@ void RubiksCube::solve() {
     step7();
     std::cout << "\nthe Rubik's Cube is solved!!!:\n";
     print_cube();
+
+    optimize_solution();
+
+    vis::init();
+    std::cout << "\nthe optimized solution:\n";
+    visualize_solution(copy);
     vis::destroy();
 }
 
@@ -1273,13 +1289,25 @@ void RubiksCube::rotate(uint8_t cmd) {
         break;
     case 11:
         Bprime();
-
-    // 12 - x
-    // 13 - x'
-    // 14 - y
-    // 15 - y'
-    // 16 - z
-    // 17 - z'
+        break;
+    case 12:
+        x();
+        break;
+    case 13:
+        xprime();
+        break;
+    case 14:
+        y();
+        break;
+    case 15:
+        yprime();
+        break;
+    case 16:
+        z();
+        break;
+    case 17:
+        zprime();
+        break;
     }
 }
 
