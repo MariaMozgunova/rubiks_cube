@@ -13,7 +13,7 @@
 
 static const unsigned int SCR_WIDTH = 800;
 static const unsigned int SCR_HEIGHT = 800;
-static const unsigned int DELAY = 20;
+static const unsigned int DELAY = 5;
 
 static const char* vertexTransformShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
